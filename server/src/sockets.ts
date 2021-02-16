@@ -1,9 +1,6 @@
+import turn from './game'
 import io from './index'
-
-interface Turn {
-    symbol: string,
-    position: number
-}
+import { Turn } from './types/in_game'
 
 let openRooms: string[] = [] // rooms that can be joined
 
@@ -11,7 +8,7 @@ io.on('connection', (socket: any) => {
 
     socket.on('find-game', () => {
 
-        if (openRooms) { // if joined existed room -> plays with 'O'
+        if (openRooms) { // if join existed room => plays with 'O'
             const room = openRooms.pop()
             socket.join(room)
 
@@ -32,6 +29,14 @@ io.on('connection', (socket: any) => {
             socket.emit('joined-room', {
                 symbol: 'X',
                 room: newRoomID
+            })
+        }
+    })
+
+    socket.on('turn', (data: Turn) => {
+        if (turn(data)) { // => player wins
+            io.to(data.room).emit('game-over', {
+                winner: data.symbol
             })
         }
     })
