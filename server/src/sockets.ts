@@ -1,4 +1,4 @@
-import turn from './game'
+import turn, { getBoard } from './game'
 import io from './index'
 import { Turn } from './types/in_game'
 
@@ -33,11 +33,21 @@ io.on('connection', (socket: any) => {
         }
     })
 
-    socket.on('turn', (data: Turn) => {
+    socket.on('turn', (data: Turn): void => {
         if (turn(data)) { // => player wins
+
+            io.to(data.room).emit('turn', {
+                board: getBoard()
+            })
+
             io.to(data.room).emit('game-over', {
                 winner: data.symbol
             })
+
+            return
         }
+        io.to(data.room).emit('turn', {
+            board: getBoard()
+        })
     })
 })
