@@ -34,3 +34,5 @@ function checkWinning(playerSymbol: PlaySymbol): boolean {
     }
     return false
 }
+
+export const getBoard = () => board
