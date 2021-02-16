@@ -9,9 +9,6 @@ const server = http.createServer(app)
 
 const io = require('socket.io')(server)
 
-io.on('connection', (socket: any) => {
-
-})
-
-
 server.listen(PORT, () => console.log('Server listening on PORT: ' + PORT))
+
+export default io
