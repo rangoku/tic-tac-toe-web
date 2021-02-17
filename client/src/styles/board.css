@@ -27,9 +27,11 @@
     align-items: center;
     justify-content: center;
     font-size: 3rem;
-    font-weight: bold;
+    font-weight: lighter;
     border: 3px solid #06C305;
+    background: black;
     transition: background 0.2s ease-in-out;
+    color: #06C305;
 }
 
 .block:hover {
