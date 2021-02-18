@@ -7,7 +7,9 @@ const PORT = process.env.PORT || 5000
 
 const server = http.createServer(app)
 
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, {
+    cors: '*'
+})
 
 server.listen(PORT, () => console.log('Server listening on PORT: ' + PORT))
 
