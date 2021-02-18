@@ -12,42 +12,35 @@ io.on('connection', (socket: any) => {
             const room = openRooms.pop()
             socket.join(room)
 
-            socket.emit('joined-room', {
-                symbol: 'O',
-                room: room
-            })
+            socket.emit('join-room', room)
 
-            io.to(room).emit('start-game', {
-                first_turn: Math.random() % 2 === 0 ? 'X' : 'O'
-            })
+            io.to(room).emit('start-game', /*first turn*/ Math.random() % 2 === 0 ? 'X' : 'O')
         }
         else { // plays with 'X'
             const newRoomID = 'room_' + Date.now() + Math.random()
             openRooms!.push(newRoomID)
             socket.join(newRoomID)
 
-            socket.emit('create-room', {
-                symbol: 'X',
-                room: newRoomID
-            })
+            socket.emit('create-room', newRoomID)
         }
     })
 
-    socket.on('turn', (data: Turn): void => {
+    socket.on('turn', (data: Turn) => {
         if (turn(data)) { // => player wins
 
             io.to(data.room).emit('turn', {
-                board: getBoard()
+                position: data.position,
+                symbol: data.symbol
             })
 
-            io.to(data.room).emit('game-over', {
-                winner: data.symbol
-            })
+            io.to(data.room).emit('game-over', /*winner: */data.symbol)
 
             return
         }
+
         io.to(data.room).emit('turn', {
-            board: getBoard()
+            position: data.position,
+            symbol: data.symbol
         })
     })
 })
