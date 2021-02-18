@@ -1,5 +1,5 @@
 import { Board } from "./types/board"
-import { PlayerSymbol, Turn } from "./types/in_game"
+import { PlaySymbol, Turn } from "./types/in_game"
 
 let board: Board = [
     'None', 'None', 'None',
@@ -22,7 +22,7 @@ export default function turn(data: Turn): boolean {
     return checkWinning(data.symbol)
 }
 
-function checkWinning(playerSymbol: PlayerSymbol): boolean {
+function checkWinning(playerSymbol: PlaySymbol): boolean {
 
     for (let i: number = 0; i < winningCombitation.length; ++i) {
         const set = winningCombitation[i]
