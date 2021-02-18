@@ -1,10 +1,7 @@
-export enum PlaySymbol {
-    X = 'X',
-    O = 'O'
-}
+export type PlayerSymbol = 'X' | 'O'
 
 export type Turn = {
-    symbol: PlaySymbol,
+    symbol: PlayerSymbol,
     position: number
     room: string
 }
