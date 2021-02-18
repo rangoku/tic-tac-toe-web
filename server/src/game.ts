@@ -34,5 +34,3 @@ function checkWin(playerSymbol: PlayerSymbol): boolean {
     }
     return false
 }
-
-export const getBoard = (): Board => board
