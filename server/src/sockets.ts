@@ -12,7 +12,7 @@ io.on('connection', (socket: any) => {
             const room = openRooms.pop()
             socket.join(room)
 
-            socket.emit('joined-game', {
+            socket.emit('joined-room', {
                 symbol: 'O',
                 room: room
             })
@@ -26,7 +26,7 @@ io.on('connection', (socket: any) => {
             openRooms!.push(newRoomID)
             socket.join(newRoomID)
 
-            socket.emit('joined-room', {
+            socket.emit('create-room', {
                 symbol: 'X',
                 room: newRoomID
             })
