@@ -1,14 +1,10 @@
 import { MouseEvent } from 'react'
+import { handleClick } from '../functions/handleClick'
 import { PLAYER_SYMBOL } from '../globals/globals'
 
 import '../styles/board.css'
 
 export default function Board(): JSX.Element {
-
-    const handleClick = (e: any): void => {
-        document.querySelector('#' + e.target.id)!.innerHTML = PLAYER_SYMBOL
-    }
-
     return (
         <div className="container">
             <div id="board">
