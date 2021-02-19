@@ -1,22 +1,12 @@
-import React, { useEffect } from 'react';
 import Board from './components/Board';
+import PlayButton from './components/PlayButton';
+import { BrowserRouter, Route } from 'react-router-dom'
 
-import Socket from './functions/Socket';
-
-function App() {
-
-  useEffect(() => {
-
-    Socket.initSockets()
-    Socket.emitSocketEvent('find-game')
-
-  }, [])
-
+export default function App() {
   return (
-    <div className="App">
-      <Board />
-    </div>
+    <BrowserRouter>
+      <Route exact path='/' component={PlayButton} />
+      <Route path='/game' component={Board} />
+    </BrowserRouter>
   );
 }
-
-export default App;
