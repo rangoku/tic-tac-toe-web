@@ -18,7 +18,12 @@ const PlayButton = (): JSX.Element => {
 
     return (
         <div className={"container"}>
-            <span style={styles_btn}>Play</span>
+            <span
+                style={styles_btn}
+                onClick={(e) => Socket.emitSocketEvent('find-game')}
+            >
+                Play
+            </span>
         </div>
     )
 }
