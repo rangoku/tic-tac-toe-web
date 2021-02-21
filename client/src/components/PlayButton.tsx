@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
-import Socket from '../functions/Socket'
+import { NavLink } from 'react-router-dom'
+import { emitSocketEvent, initGeneralSockets } from '../functions/sockets'
+
 import '../styles/board.css'
 
 const styles_btn: React.CSSProperties = {
@@ -13,17 +15,23 @@ const styles_btn: React.CSSProperties = {
 const PlayButton = (): JSX.Element => {
 
     useEffect(() => {
-        Socket.initSockets()
+        initGeneralSockets()
     }, [])
+
+    const startGame = (e: any) => {
+        emitSocketEvent('find-game')
+    }
 
     return (
         <div className={"container"}>
-            <span
-                style={styles_btn}
-                onClick={(e) => Socket.emitSocketEvent('find-game')}
-            >
-                Play
+            <NavLink to='/game'>
+                <span
+                    style={styles_btn}
+                    onClick={startGame}
+                >
+                    Play
             </span>
+            </NavLink>
         </div>
     )
 }
