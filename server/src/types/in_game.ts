@@ -5,3 +5,5 @@ export type Turn = {
     position: number
     room: string
 }
+
+export type WinningCombitation = number[]
