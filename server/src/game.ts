@@ -7,14 +7,14 @@ let board: Board = [
     'None', 'None', 'None'
 ]
 
-// [1][2][3]
-// [4][5][6]
-// [7][8][9]
+// [0][1][2]
+// [3][4][5]
+// [6][7][8]
 
 let winningCombitation: Array<WinningCombitation> = [
-    [1, 2, 3], [4, 5, 6], [7, 8, 9],
-    [1, 4, 7], [2, 5, 8], [3, 6, 9],
-    [1, 5, 9], [3, 5, 7]
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
 ]
 
 export default function turn(data: Turn): WinningCombitation | null {
@@ -27,9 +27,9 @@ function checkWin(playerSymbol: PlayerSymbol): WinningCombitation | null {
     for (let i: number = 0; i < winningCombitation.length; ++i) {
         const set = winningCombitation[i]
         if (
-            board[set[0] - 1] === playerSymbol &&
-            board[set[1] - 1] === playerSymbol &&
-            board[set[2] - 1] === playerSymbol
+            board[set[0]] === playerSymbol &&
+            board[set[1]] === playerSymbol &&
+            board[set[2]] === playerSymbol
         ) return set
     }
     return null
