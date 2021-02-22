@@ -49,14 +49,20 @@ io.on('connection', (socket: any) => {
     })
 
     socket.on('turn', (data: Turn) => {
-        if (turn(data)) { // => player wins
+
+        const wset = turn(data)
+
+        if (wset !== null) { // => player wins
 
             io.to(data.room).emit('turn', {
                 position: data.position,
                 symbol: data.symbol
             })
 
-            io.to(data.room).emit('game-over', /*winner: */data.symbol)
+            io.to(data.room).emit('game-over', {
+                winner: data.symbol,
+                combination: wset 
+            })
 
             return
         }
