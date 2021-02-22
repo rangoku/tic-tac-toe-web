@@ -1,21 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
+import Loader from 'react-loader-spinner'
 import { handleClick } from '../functions/handleClick'
 import { socket } from '../functions/sockets'
 import { PLAYER_SYMBOL, ROOM } from '../globals/globals'
 
 import '../styles/board.css'
-
-const style_text: React.CSSProperties = {
-    color: '#06C305',
-    fontSize: 75,
-    visibility: 'hidden'
-}
+import '../styles/styles.css'
 
 const Loading = (): JSX.Element => {
     return (
-        <>
-            <span id="load" style={style_text}>SEARCHING FOR OPPONENT</span>
-        </>
+        <div className={"container visibility-hidden"}>
+            <span className={"__default__font-style"}>SEARCHING FOR OPPONENT</span>
+            <Loader type="ThreeDots" height={80} width={80} />
+        </div>
     )
 }
 
@@ -62,6 +59,19 @@ export default function Board(): JSX.Element {
             else
                 boardRef.current!.style.pointerEvents = 'none'
         })
+
+
+        socket.on('game-over', (
+            gameOver: { winner: string, combination: number[] }
+        ) => {
+            console.log('game over:', gameOver)
+
+            for (let i: number = 0; i < gameOver.combination.length; ++i) {
+                eval(`btn${gameOver.combination[i]}`).current!.style.color = 'yellow'
+            }
+
+        })
+
     }, [])
 
     return (
