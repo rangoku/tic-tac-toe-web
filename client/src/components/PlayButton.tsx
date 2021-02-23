@@ -1,16 +1,9 @@
 import { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
-import { emitSocketEvent, initGeneralSockets } from '../functions/sockets'
+import { initGeneralSockets, socket } from '../functions/sockets'
 
 import '../styles/board.css'
-
-const styles_btn: React.CSSProperties = {
-    fontSize: 75,
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#06C305',
-    cursor: 'pointer'
-}
+import '../styles/styles.css'
 
 const PlayButton = (): JSX.Element => {
 
@@ -19,14 +12,14 @@ const PlayButton = (): JSX.Element => {
     }, [])
 
     const startGame = (e: any) => {
-        emitSocketEvent('find-game')
+        socket.emit('find-game')
     }
 
     return (
         <div className={"container"}>
             <NavLink to='/game'>
                 <span
-                    style={styles_btn}
+                    className={"__default__font-style cursor-pointer"}
                     onClick={startGame}
                 >
                     Play
