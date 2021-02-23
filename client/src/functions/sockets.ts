@@ -11,16 +11,9 @@ export const initGeneralSockets = (): void => {
     })
 
     socket.on('create-room', (room: string) => {
-        document.getElementById("load")!.style.visibility = 'visible'
+        document.querySelector(".visibility-hidden")!.classList.remove('visibility-hidden')
         setPlayerSymbol('X')
         setRoom(room)
     })
 
-    socket.on('game-over', (winner: string) => {
-        console.log('winner', winner)
-    })
-}
-
-export const emitSocketEvent = (eventName: string, data?: any): void => {
-    socket.emit(eventName, data)
 }
