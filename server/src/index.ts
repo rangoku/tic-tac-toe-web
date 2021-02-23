@@ -1,8 +1,10 @@
 import express from 'express'
 import http from 'http'
+import checkWin from './game'
 
 import turn from './game'
-import { Turn } from './types/in_game'
+import { Board } from './types/board'
+import { PlayerSymbol, Turn } from './types/in_game'
 
 const app = express()
 
@@ -49,29 +51,29 @@ io.on('connection', (socket: any) => {
     })
 
     socket.on('turn', (data: Turn) => {
-
-        const wset = turn(data)
-
-        if (wset !== null) { // => player wins
-
-            io.to(data.room).emit('turn', {
-                position: data.position,
-                symbol: data.symbol
-            })
-
-            io.to(data.room).emit('game-over', {
-                winner: data.symbol,
-                combination: wset 
-            })
-
-            return
-        }
-
         io.to(data.room).emit('turn', {
             position: data.position,
             symbol: data.symbol
         })
     })
+
+    socket.on('check-win', (data: {
+        symbol: PlayerSymbol,
+        board: Board,
+        room: string
+    }) => {
+        const comb = checkWin(data.symbol, data.board)
+
+        console.log(comb)
+
+        if (comb !== null) {
+            io.to(data.room).emit('game-over', {
+                winner: data.symbol,
+                combination: comb
+            })
+        }
+    })
+
 })
 
 server.listen(PORT, () => console.log('Server listening on PORT: ' + PORT))
