@@ -1,8 +1,6 @@
 import express from 'express'
 import http from 'http'
 import checkWin from './game'
-
-import turn from './game'
 import { Board } from './types/board'
 import { PlayerSymbol, Turn } from './types/in_game'
 
@@ -67,5 +65,3 @@ io.on('connection', (socket: any) => {
 })
 
 server.listen(PORT, () => console.log('Server listening on PORT: ' + PORT))
-
-//export default io
