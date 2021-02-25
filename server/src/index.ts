@@ -23,19 +23,13 @@ let openRooms: string[] = [] // rooms that can be joined
 
 io.on('connection', (socket: any) => {
 
-    console.log('connected')
-
     socket.on('find-game', () => {
-
-        console.log('f-g')
 
         if (openRooms.length > 0) { // if join existed room => plays with 'O'
             const room = openRooms.pop()
             socket.join(room)
 
             socket.emit('join-room', room)
-
-            console.log('has open: ', room)
 
             io.to(room).emit('start-game', /*first turn*/(Math.floor(Math.random() * 2) + 1) % 2 === 0 ? 'X' : 'O')
         }
@@ -45,8 +39,6 @@ io.on('connection', (socket: any) => {
             socket.join(newRoomID)
 
             socket.emit('create-room', newRoomID)
-
-            console.log('created:', newRoomID)
         }
     })
 
@@ -63,8 +55,6 @@ io.on('connection', (socket: any) => {
         room: string
     }) => {
         const comb = checkWin(data.symbol, data.board)
-
-        console.log(comb)
 
         if (comb !== null) {
             io.to(data.room).emit('game-over', {
