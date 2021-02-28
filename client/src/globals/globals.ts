@@ -1,4 +1,3 @@
-import { maxHeaderSize } from "http"
 import { PlayerSymbol } from "../types/player"
 
 // config

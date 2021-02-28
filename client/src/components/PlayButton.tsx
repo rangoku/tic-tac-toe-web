@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import { initGeneralSockets, socket } from '../functions/sockets'
 
@@ -11,7 +11,7 @@ const PlayButton = (): JSX.Element => {
         initGeneralSockets()
     }, [])
 
-    const startGame = (e: any) => {
+    const startGame = () => {
         socket.emit('find-game')
     }
 

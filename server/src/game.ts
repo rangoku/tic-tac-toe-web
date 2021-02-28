@@ -1,21 +1,21 @@
 import { Board } from "./types/board"
-import { PlayerSymbol, Turn, WinningCombitation } from "./types/in_game"
+import { PlayerSymbol, WinningCombination } from "./types/in_game"
 
 // [0][1][2]
 // [3][4][5]
 // [6][7][8]
 
-const winningCombitation: Array<WinningCombitation> = [
+const winningCombination: Array<WinningCombination> = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
     [0, 4, 8], [2, 4, 6]
 ]
 
 export default function checkWin(playerSymbol: PlayerSymbol,
-    board: Board): WinningCombitation | null {
+    board: Board): WinningCombination | null {
 
-    for (let i: number = 0; i < winningCombitation.length; ++i) {
-        const set = winningCombitation[i]
+    for (let i: number = 0; i < winningCombination.length; ++i) {
+        const set = winningCombination[i]
         if (
             board[set[0]] === playerSymbol &&
             board[set[1]] === playerSymbol &&

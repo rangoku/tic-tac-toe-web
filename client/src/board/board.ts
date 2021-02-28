@@ -14,6 +14,7 @@ const setBoardCell = (position: number, symbol: Exclude<PlayerSymbol, undefined>
 
     if (symbol === PLAYER_SYMBOL)
         socket.emit('check-win', {
+
             symbol: PLAYER_SYMBOL,
             board,
             room: ROOM

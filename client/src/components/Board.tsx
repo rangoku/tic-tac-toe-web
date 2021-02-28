@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Loader from 'react-loader-spinner'
 import { setBoardCell } from '../board/board'
 import { handleClick } from '../functions/handleClick'
 import { socket } from '../functions/sockets'
-import { PLAYER_SYMBOL, ROOM } from '../globals/globals'
+import { PLAYER_SYMBOL } from '../globals/globals'
 
 import '../styles/board.css'
 import '../styles/styles.css'
@@ -93,7 +93,7 @@ export default function Board(): JSX.Element {
                 eval(`btn${gameOver.combination[i]}`).current!.style.color = 'yellow'
 
             setIsWin(
-                gameOver.winner === PLAYER_SYMBOL ? true : false
+                gameOver.winner === PLAYER_SYMBOL
             )
 
         })

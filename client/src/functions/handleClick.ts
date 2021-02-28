@@ -1,4 +1,3 @@
-import { setBoardCell } from "../board/board"
 import { PLAYER_SYMBOL, ROOM } from "../globals/globals"
 import { socket } from "./sockets"
 

@@ -6,4 +6,4 @@ export type Turn = {
     room: string
 }
 
-export type WinningCombitation = number[]
+export type WinningCombination = number[]

@@ -15,5 +15,4 @@ export const initGeneralSockets = (): void => {
         setPlayerSymbol('X')
         setRoom(room)
     })
-
 }
