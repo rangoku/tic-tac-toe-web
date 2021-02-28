@@ -12,30 +12,31 @@ const server = http.createServer(app)
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: '*',
+        origin: 'http://localhost:3000',
         methods: ['GET', 'POST']
     }
 })
 
-let openRooms: string[] = [] // rooms that can be joined
+let openRoom: string | null = null // rooms that can be joined
 
 io.on('connection', (socket: any) => {
 
     socket.on('find-game', () => {
 
-        if (openRooms.length > 0) { // if join existed room => plays with 'O'
-            const room = openRooms.pop()
-            socket.join(room)
+        if (openRoom) { // if join existed room => plays with 'O'
+            const room = openRoom
+            openRoom = null
 
+            socket.join(room)
             socket.emit('join-room', room)
 
             io.to(room).emit('start-game', /*first turn*/(Math.floor(Math.random() * 2) + 1) % 2 === 0 ? 'X' : 'O')
         }
         else { // plays with 'X'
             const newRoomID = 'room_' + Date.now() + Math.random()
-            openRooms!.push(newRoomID)
-            socket.join(newRoomID)
+            openRoom = newRoomID
 
+            socket.join(newRoomID)
             socket.emit('create-room', newRoomID)
         }
     })
