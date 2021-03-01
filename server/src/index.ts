@@ -1,6 +1,8 @@
 import express from 'express'
 import http from 'http'
+import CorsConfig from './config/corsConfig'
 import checkWin from './game'
+import logger from './logger/logger'
 import { Board } from './types/board'
 import { PlayerSymbol, Turn } from './types/in_game'
 
@@ -23,6 +25,8 @@ io.on('connection', (socket: any) => {
 
     socket.on('find-game', () => {
 
+        logger.info(socket.conn.id + " :: find-game")
+
         if (openRoom) { // if join existed room => plays with 'O'
             const room = openRoom
             openRoom = null
@@ -31,6 +35,8 @@ io.on('connection', (socket: any) => {
             socket.emit('join-room', room)
 
             io.to(room).emit('start-game', /*first turn*/(Math.floor(Math.random() * 2) + 1) % 2 === 0 ? 'X' : 'O')
+
+            logger.error('[room::' + room + "] :: game starts")
         }
         else { // plays with 'X'
             const newRoomID = 'room_' + Date.now() + Math.random()
@@ -38,6 +44,8 @@ io.on('connection', (socket: any) => {
 
             socket.join(newRoomID)
             socket.emit('create-room', newRoomID)
+
+            logger.info(socket.conn.id + " :: create-room")
         }
     })
 
@@ -60,6 +68,7 @@ io.on('connection', (socket: any) => {
                 winner: data.symbol,
                 combination: comb
             })
+            logger.info("[room::" + data.room + "] :: game-over :: " + "comb :: " + comb)
         }
     })
 
