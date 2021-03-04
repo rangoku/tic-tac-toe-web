@@ -6,3 +6,6 @@ dist
 
 #server log
 server.log
+
+#config
+config
