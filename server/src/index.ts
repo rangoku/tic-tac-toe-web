@@ -14,7 +14,7 @@ const server = http.createServer(app)
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://tic-tac-toe-web-api.herokuapp.com',
+        origin: 'https://tic-tac-toe-webgame.herokuapp.com',
         methods: ['GET', 'POST']
     }
 })
