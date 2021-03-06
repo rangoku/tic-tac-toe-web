@@ -14,8 +14,8 @@ const server = http.createServer(app)
 
 const io = require('socket.io')(server, {
     cors: {
-        origin: 'https://tic-tac-toe-webgame.herokuapp.com',
-        methods: ['GET', 'POST']
+        origin: CorsConfig.CLIENT_ORIGIN,
+        methods: CorsConfig.METHODS
     }
 })
 
@@ -36,7 +36,7 @@ io.on('connection', (socket: any) => {
 
             io.to(room).emit('start-game', /*first turn*/(Math.floor(Math.random() * 2) + 1) % 2 === 0 ? 'X' : 'O')
 
-            logger.error('[room::' + room + "] :: game starts")
+            logger.info('[room::' + room + "] :: game starts")
         }
         else { // plays with 'X'
             const newRoomID = 'room_' + Date.now() + Math.random()
@@ -63,15 +63,30 @@ io.on('connection', (socket: any) => {
     }) => {
         const comb = checkWin(data.symbol, data.board)
 
-        if (comb !== null) {
+        if (comb && comb !== 'draw') {
             io.to(data.room).emit('game-over', {
                 winner: data.symbol,
                 combination: comb
             })
             logger.info("[room::" + data.room + "] :: game-over :: " + "comb :: " + comb)
         }
+        else if (comb === 'draw') {
+            io.to(data.room).emit('draw')
+            logger.info("room::" + data.room + "] :: draw")
+        }
     })
 
+    socket.on('disconnecting', () => {
+        let it: Iterator<string> = socket.rooms.values()
+        it.next()
+        const room = it.next().value
+        console.log(room)
+
+        socket.broadcast.to(room).emit('opponent-disconnected')
+
+        if (io.sockets.adapter.rooms.get(room).length < 2) // person disconnected while waiting for opponent
+            openRoom = null
+    })
 
 })
 

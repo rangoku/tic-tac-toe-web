@@ -12,7 +12,7 @@ const winningCombination: Array<WinningCombination> = [
 ]
 
 export default function checkWin(playerSymbol: PlayerSymbol,
-    board: Board): WinningCombination | null {
+    board: Board): WinningCombination | 'draw' | null {
 
     for (let i: number = 0; i < winningCombination.length; ++i) {
         const set = winningCombination[i]
@@ -22,5 +22,6 @@ export default function checkWin(playerSymbol: PlayerSymbol,
             board[set[2]] === playerSymbol
         ) return set
     }
-    return null
+
+    return (!(board.includes('None')) ? 'draw' : null)
 }
